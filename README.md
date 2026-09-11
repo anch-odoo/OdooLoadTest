@@ -1,16 +1,18 @@
-# OdooLoadTest2024
+# Flow
 
-Code used for Odoo Experience 2024 about load testing
+1. Create Odoo users:
+```
+python3 generate_users.py
+```
 
-to launch the load test:
+2. Launch the load test:
 ```
 lt.sh lt_ebusiness.py 8 2000 60 0 50
 ```
 
 This will launch Locust Web UI, on port 8089, with 8 local workers, 2000 simulated users, for 60 minutes, and add new users at the rythm of 50/s
 
-
-## conf.ini
+3. Prepare conf.ini
 
 ```
 [odoo]
@@ -25,3 +27,7 @@ webshop=200
 min_sleep=5
 max_sleep=20
 ```
+
+# Useful Link
+odoolib: https://github.com/odoo/odoo-client-lib/blob/master/odoolib/main.py
+OdooLocust: https://github.com/nseinlet/OdooLocust/tree/master

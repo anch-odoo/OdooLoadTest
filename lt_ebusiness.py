@@ -5,7 +5,11 @@ import logging
 
 from locust import task, between, run_single_user
 from OdooLocust import OdooLocustUser, crm, OdooTaskSet
-from lt_webshop import WebShop
+
+import odoolib
+import odoolib.tools
+
+odoolib.json_rpc = odoolib.tools.json_rpc
 
 config = configparser.ConfigParser()
 config.read("conf.ini")
@@ -17,7 +21,7 @@ class Delivering(crm.quotation.SaleOrder):
     def _fields_view_get(self, model, view_mode):
         return ['id', 'name', 'state', 'partner_id']
 
-    @task(5)
+    @task
     def confirm_quotation(self):
         found = False
         retry=0
@@ -27,7 +31,7 @@ class Delivering(crm.quotation.SaleOrder):
             other_domain =  self._get_search_domain()
             if other_domain:
                 search_domain = ['&'] + search_domain + other_domain
-            
+
             nbr_records = self.model.search_count(search_domain)
             offset = random.randint(0, nbr_records % 80) if nbr_records > 80 else 0
 
@@ -37,7 +41,7 @@ class Delivering(crm.quotation.SaleOrder):
                 self.random_id = random.choice(ids)
                 self.model.action_confirm(self.random_id)
 
-    @task(5)
+    @task
     def deliver_saleorder(self):
         found = False
         retry=0
@@ -71,7 +75,7 @@ class InvoicePayment(OdooTaskSet.OdooGenericTaskSet):
     def _fields_view_get(self, model, view_mode):
         return ['id', 'name', 'res', 'state', 'date']
 
-    @task(5)
+    @task
     def register_payment(self):
         domain = [["move_type", "=", "out_invoice"], ['payment_state', '=', 'not_paid']]
         nbr_records = self.model.search_count(domain)
@@ -86,7 +90,7 @@ class InvoicePayment(OdooTaskSet.OdooGenericTaskSet):
             pay_id = pay_model.create({}, context=pay_ctx)
             pay_model.action_create_payments(pay_id)
 
-                
+
 class BackendSalesMen(OdooLocustUser.OdooLocustUser):
     weight = int(config["weight"].get('saleman', 1))
     wait_time = between(0.1, 1)
@@ -94,14 +98,14 @@ class BackendSalesMen(OdooLocustUser.OdooLocustUser):
     host = config["odoo"]["url"]
     login = "invalid"
     password = "invalid"
-    port = 443
-    protocol = "jsonrpcs"
+    port = 8069
+    protocol = "jsonrpc"
     _user_list = []
 
     def __init__(self, *args, **kwargs):
         self._fill_users_from_usr_file()
         return super().__init__(*args, **kwargs)
-    
+
     def _fill_users_from_usr_file(self):
         with open('usr.txt') as usr_file:
             for line in usr_file.readlines():
@@ -115,8 +119,6 @@ class BackendSalesMen(OdooLocustUser.OdooLocustUser):
         return super().on_start()
 
     tasks = {
-        crm.partner.ResPartner: 1,
-        crm.lead.CrmLead: 2,
         Delivering: 4,
         InvoicePayment:1,
     }

@@ -2,7 +2,7 @@
 if [ -z "$4" ]
   then
       echo "No argument supplied"
-      echo "lt.sh test_file nbr_workers concurrency time [rounds] [spawn_rate]"
+      echo "lt.sh test_file nbr_workers users time [rounds] [spawn_rate]"
       exit 1
 fi
 
