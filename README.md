@@ -1,6 +1,6 @@
 # Before everything
 
-Watch this YT tutorial first: https://www.youtube.com/watch?v=HaHzHME2eF8&list=PL1pbTTfOBPOrud6OwOwoQoC5MnXMWI1pE&index=8
+Watch this [YT tutorial](https://www.youtube.com/watch?v=HaHzHME2eF8&list=PL1pbTTfOBPOrud6OwOwoQoC5MnXMWI1pE&index=8) first
 
 # Back-end load test Flow
 
@@ -38,10 +38,10 @@ max_sleep=20
 
 - See how to use har2locust in: https://github.com/SvenskaSpel/har2locust
 - It would create one User profile with one task
-- If you want to test multiple flows, you could simulate your new flow in your browser, download new .har file, export it with har2locust, and just copy the that one new task and paste it to `e_commerce.py`
+- If you want to test multiple flows, you could simulate your new flow in your browser, download new .har file, export it with har2locust, and copy that one new task and paste it to `e_commerce.py`
 
-Be mindful on:
-- Not include your `access_token` and `csrf_token` when pushing har2locust output python file to the public
+Be mindful:
+- Do not include your `access_token` and `csrf_token` when pushing har2locust output python file to the public
 
 # Useful Link
 - odoolib: https://github.com/odoo/odoo-client-lib/blob/master/odoolib/main.py
