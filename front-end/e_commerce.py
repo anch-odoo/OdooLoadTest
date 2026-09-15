@@ -1,4 +1,11 @@
+from bs4 import BeautifulSoup
+from random import randint
+
 from locust import FastHttpUser, run_single_user, task
+
+
+MIN_SLEEP = 1
+MAX_SLEEP = 1
 
 
 class localhost(FastHttpUser):
@@ -17,6 +24,17 @@ class localhost(FastHttpUser):
 
     @task(5)
     def check_products(self):
+        self.client.client.clientpool.close()
+        self.client.cookiejar.clear()
+        product = {
+            'url': '',
+            'template_id': -1,
+            'id': 1,
+        }
+        csrf_token = False
+        access_token = False
+        user_speed = randint(MIN_SLEEP, MAX_SLEEP) / 1000.0
+
         with self.client.request(
             "GET",
             "/shop",
@@ -63,7 +81,6 @@ class localhost(FastHttpUser):
             "/web/dataset/call_kw/ir.model/get_available_models",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "205",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/customizable-desk-9",
                 "Sec-Fetch-Dest": "empty",
@@ -107,7 +124,6 @@ class localhost(FastHttpUser):
             "/website_sale/get_combination_info",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "137",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/customizable-desk-9?attribute_values=50%2C88",
                 "Sec-Fetch-Dest": "empty",
@@ -132,7 +148,6 @@ class localhost(FastHttpUser):
             "/shop/products/recently_viewed_update",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "67",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/customizable-desk-9?attribute_values=50%2C88",
                 "Sec-Fetch-Dest": "empty",
@@ -205,7 +220,6 @@ class localhost(FastHttpUser):
             "/website_sale/get_combination_info",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "135",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/desks-1/furn-1118-corner-desk-left-sit-18",
                 "Sec-Fetch-Dest": "empty",
@@ -244,7 +258,6 @@ class localhost(FastHttpUser):
             "/shop/products/recently_viewed_update",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "67",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/desks-1/furn-1118-corner-desk-left-sit-18",
                 "Sec-Fetch-Dest": "empty",
@@ -303,7 +316,6 @@ class localhost(FastHttpUser):
             "/website_sale/get_combination_info",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "135",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/desks-1/furn-7888-desk-stand-with-screen-21",
                 "Sec-Fetch-Dest": "empty",
@@ -328,7 +340,6 @@ class localhost(FastHttpUser):
             "/shop/products/recently_viewed_update",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "67",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/desks-1/furn-7888-desk-stand-with-screen-21",
                 "Sec-Fetch-Dest": "empty",
@@ -418,7 +429,6 @@ class localhost(FastHttpUser):
             "/web/dataset/call_kw/ir.model/get_available_models",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "205",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/customizable-desk-9",
                 "Sec-Fetch-Dest": "empty",
@@ -462,7 +472,6 @@ class localhost(FastHttpUser):
             "/website_sale/get_combination_info",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "137",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/customizable-desk-9?attribute_values=50%2C88",
                 "Sec-Fetch-Dest": "empty",
@@ -487,7 +496,6 @@ class localhost(FastHttpUser):
             "/website_sale/get_combination_info",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "137",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/customizable-desk-9?attribute_values=50%2C89",
                 "Sec-Fetch-Dest": "empty",
@@ -512,7 +520,6 @@ class localhost(FastHttpUser):
             "/website_sale/get_combination_info",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "137",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/customizable-desk-9?attribute_values=50%2C89",
                 "Sec-Fetch-Dest": "empty",
@@ -537,7 +544,6 @@ class localhost(FastHttpUser):
             "/website_sale/should_show_product_configurator",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "121",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/customizable-desk-9?attribute_values=50%2C89",
                 "Sec-Fetch-Dest": "empty",
@@ -560,7 +566,6 @@ class localhost(FastHttpUser):
             "/website_sale/product_configurator/get_values",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "185",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/customizable-desk-9?attribute_values=50%2C89",
                 "Sec-Fetch-Dest": "empty",
@@ -586,7 +591,6 @@ class localhost(FastHttpUser):
             "/shop/cart/add",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "209",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/customizable-desk-9?attribute_values=50%2C89",
                 "Sec-Fetch-Dest": "empty",
@@ -640,7 +644,6 @@ class localhost(FastHttpUser):
             "/shop/express/shipping_address_change",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "215",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/cart",
                 "Sec-Fetch-Dest": "empty",
@@ -669,7 +672,6 @@ class localhost(FastHttpUser):
             "/shop/set_delivery_method",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "61",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/cart",
                 "Sec-Fetch-Dest": "empty",
@@ -683,7 +685,6 @@ class localhost(FastHttpUser):
             "/shop/express_checkout",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "364",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/cart",
                 "Sec-Fetch-Dest": "empty",
@@ -715,13 +716,14 @@ class localhost(FastHttpUser):
                 },
             },
         ) as resp:
-            pass
+            soup = BeautifulSoup(resp.text, 'lxml')
+            csrf_token = soup.select_one("input[name='csrf_token']")["value"]
+            access_token = soup.select_one("form[data-access-token]")["data-access-token"]
         with self.rest(
             "POST",
             "/shop/payment/transaction/37",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "316",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/cart",
                 "Sec-Fetch-Dest": "empty",
@@ -738,8 +740,8 @@ class localhost(FastHttpUser):
                     "flow": "direct",
                     "tokenization_requested": False,
                     "landing_route": "/shop/payment/validate",
-                    "access_token": "hidden",
-                    "csrf_token": "hidden",
+                    "access_token": access_token,
+                    "csrf_token": csrf_token,
                 },
             },
         ) as resp:
@@ -749,7 +751,6 @@ class localhost(FastHttpUser):
             "/payment/demo/simulate_payment",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "118",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/shop/cart",
                 "Sec-Fetch-Dest": "empty",
@@ -799,7 +800,6 @@ class localhost(FastHttpUser):
             "/payment/status/poll",
             headers={
                 "Accept": "*/*",
-                "Content-Length": "118",
                 "Origin": "http://localhost:8069",
                 "Referer": "http://localhost:8069/payment/status",
                 "Sec-Fetch-Dest": "empty",
@@ -810,7 +810,7 @@ class localhost(FastHttpUser):
                 "jsonrpc": "2.0",
                 "method": "call",
                 "params": {
-                    "csrf_token": "hidden"
+                    "csrf_token": csrf_token
                 },
             },
         ) as resp:
