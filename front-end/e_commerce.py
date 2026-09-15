@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from time import sleep
 from random import randint
 
 from locust import FastHttpUser, run_single_user, task
@@ -26,13 +27,6 @@ class localhost(FastHttpUser):
     def check_products(self):
         self.client.client.clientpool.close()
         self.client.cookiejar.clear()
-        product = {
-            'url': '',
-            'template_id': -1,
-            'id': 1,
-        }
-        csrf_token = False
-        access_token = False
         user_speed = randint(MIN_SLEEP, MAX_SLEEP) / 1000.0
 
         with self.client.request(
@@ -49,6 +43,7 @@ class localhost(FastHttpUser):
             catch_response=True,
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "GET",
             "/website/translations?hash=40099c13aa79a172460fbaeb7a3ff1c32cf8c15e&lang=en_US",
@@ -62,6 +57,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.client.request(
             "GET",
             "/shop/customizable-desk-9",
@@ -76,6 +72,7 @@ class localhost(FastHttpUser):
             catch_response=True,
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/web/dataset/call_kw/ir.model/get_available_models",
@@ -106,6 +103,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "GET",
             "/website/translations?hash=40099c13aa79a172460fbaeb7a3ff1c32cf8c15e&lang=en_US",
@@ -119,6 +117,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/website_sale/get_combination_info",
@@ -143,6 +142,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/shop/products/recently_viewed_update",
@@ -161,6 +161,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.client.request(
             "GET",
             "/shop/category/desks-1",
@@ -202,6 +203,7 @@ class localhost(FastHttpUser):
             catch_response=True,
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "GET",
             "/website/translations?hash=40099c13aa79a172460fbaeb7a3ff1c32cf8c15e&lang=en_US",
@@ -239,6 +241,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.client.request(
             "GET",
             "/shop/category/desks-1",
@@ -271,6 +274,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "GET",
             "/website/translations?hash=40099c13aa79a172460fbaeb7a3ff1c32cf8c15e&lang=en_US",
@@ -311,6 +315,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/website_sale/get_combination_info",
@@ -335,6 +340,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/shop/products/recently_viewed_update",
@@ -353,6 +359,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.client.request(
             "GET",
             "/shop/category/desks-1",
@@ -383,6 +390,11 @@ class localhost(FastHttpUser):
 
     @task(1)
     def buy_a_product(self):
+        self.client.cookiejar.clear()
+        csrf_token = False
+        access_token = False
+        user_speed = randint(MIN_SLEEP, MAX_SLEEP) / 1000.0
+
         with self.client.request(
             "GET",
             "/shop",
@@ -397,6 +409,7 @@ class localhost(FastHttpUser):
             catch_response=True,
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "GET",
             "/website/translations?hash=40099c13aa79a172460fbaeb7a3ff1c32cf8c15e&lang=en_US",
@@ -410,6 +423,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.client.request(
             "GET",
             "/shop/customizable-desk-9",
@@ -424,6 +438,7 @@ class localhost(FastHttpUser):
             catch_response=True,
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/web/dataset/call_kw/ir.model/get_available_models",
@@ -454,6 +469,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "GET",
             "/website/translations?hash=40099c13aa79a172460fbaeb7a3ff1c32cf8c15e&lang=en_US",
@@ -467,6 +483,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/website_sale/get_combination_info",
@@ -491,6 +508,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/website_sale/get_combination_info",
@@ -515,6 +533,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/website_sale/get_combination_info",
@@ -539,6 +558,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/website_sale/should_show_product_configurator",
@@ -561,6 +581,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/website_sale/product_configurator/get_values",
@@ -586,6 +607,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/shop/cart/add",
@@ -612,6 +634,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.client.request(
             "GET",
             "/shop/cart",
@@ -626,6 +649,7 @@ class localhost(FastHttpUser):
             catch_response=True,
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "GET",
             "/website/translations?hash=40099c13aa79a172460fbaeb7a3ff1c32cf8c15e&lang=en_US",
@@ -639,6 +663,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/shop/express/shipping_address_change",
@@ -667,6 +692,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/shop/set_delivery_method",
@@ -680,6 +706,7 @@ class localhost(FastHttpUser):
             json={"id": 1, "jsonrpc": "2.0", "method": "call", "params": {"dm_id": 1}},
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/shop/express_checkout",
@@ -719,6 +746,7 @@ class localhost(FastHttpUser):
             soup = BeautifulSoup(resp.text, 'lxml')
             csrf_token = soup.select_one("input[name='csrf_token']")["value"]
             access_token = soup.select_one("form[data-access-token]")["data-access-token"]
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/shop/payment/transaction/37",
@@ -746,6 +774,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/payment/demo/simulate_payment",
@@ -768,6 +797,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.client.request(
             "GET",
             "/payment/status",
@@ -782,6 +812,7 @@ class localhost(FastHttpUser):
             catch_response=True,
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "GET",
             "/website/translations?hash=40099c13aa79a172460fbaeb7a3ff1c32cf8c15e&lang=en_US",
@@ -795,6 +826,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "POST",
             "/payment/status/poll",
@@ -815,6 +847,7 @@ class localhost(FastHttpUser):
             },
         ) as resp:
             pass
+        sleep(user_speed)
         with self.client.request(
             "GET",
             "/shop/payment/validate",
@@ -828,6 +861,7 @@ class localhost(FastHttpUser):
             catch_response=True,
         ) as resp:
             pass
+        sleep(user_speed)
         with self.client.request(
             "GET",
             "/shop/confirmation",
@@ -841,6 +875,7 @@ class localhost(FastHttpUser):
             catch_response=True,
         ) as resp:
             pass
+        sleep(user_speed)
         with self.rest(
             "GET",
             "/website/translations?hash=40099c13aa79a172460fbaeb7a3ff1c32cf8c15e&lang=en_US",
